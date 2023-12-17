@@ -1,0 +1,44 @@
+Class AnnotationExample has JavaDoc comment: 
+/**
+ * This is a class
+ *
+ * @ClassDocumentation "This is a class "
+ */
+
+
+Method sum in class AnnotationExample has JavaDoc comment: 
+/**
+     * This is a method  inside class.
+     *
+     * @MethodDocumentation "This is a method inside class"
+     */
+
+
+Method sub in class AnnotationExample has JavaDoc comment: 
+/**
+     * This is a method subtract inside class.
+     *
+     * @MethodDocumentation "This is a method Subtract inside class"
+     */
+
+
+Method division in class AnnotationExample has JavaDoc comment: 
+/**
+     * This is a method division inside AnnotationExampleClass.
+     *
+     * @MethodDocumentation "This is a method AD inside A"
+     */
+
+
+Method print in class ExampleClass has JavaDoc comment: 
+/** this is a method called print
+     * used to print a integer
+     */
+
+
+Method go in class ExampleClass has JavaDoc comment: 
+/** this is a method called go
+     * used to print a String
+     */
+
+

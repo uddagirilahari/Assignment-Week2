@@ -1,0 +1,41 @@
+import sun.tools.jar.Main
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'com.github.javaparser:javaparser-core:2.0.0'
+    implementation 'org.reflections:reflections:0.9.12'
+
+}
+tasks.register('findAnnotatedClassesAndMethods') {
+    doLast {
+        Main.main()
+        FindAnnotation.findAnnotatedClassesAndMethods()
+    }
+}
+
+tasks.register('processFiles', JavaExec) {
+    main = 'Main'
+    classpath = sourceSets.main.runtimeClasspath
+    args 'findAnnotatedClassesAndMethods'
+}
+
+tasks.findByName('processFiles').dependsOn 'findAnnotatedClassesAndMethods'
+
+
+test {
+    useJUnitPlatform()
+}
