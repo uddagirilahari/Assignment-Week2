@@ -19,6 +19,42 @@ import java.util.Set;
 public class Main{
     public static void main(String[] args) {
 
+        String packageName = "model";
+
+        // Set up Reflections library to scan the codebase
+        Reflections reflections = new Reflections(packageName);
+
+        // Find classes annotated with @ClassDocumentation
+        Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(ClassDocumentation.class);
+
+        // Process annotated classes
+
+
+        System.out.println("Annotated Classes are :");
+        for (Class<?> clazz : annotatedClasses) {
+            System.out.println("Annotated Class: " + clazz.getName());
+        }
+
+        System.out.println();
+        System.out.println();
+
+        System.out.println("Annotated Methods are :");
+        for (Class<?> clazz : annotatedClasses) {
+            Method[] methods = clazz.getDeclaredMethods();
+            for (Method method : methods) {
+                // Check for @MethodDocumentation annotation on the method
+                if (method.isAnnotationPresent(MethodDocumentation.class)) {
+                    // Process annotated methods
+                    System.out.println("Annotated Method: " + clazz.getName() + "." + method.getName());
+                }
+            }
+        }
+
+
+        System.out.println();
+        System.out.println();
+
+        
         findAnnotatedClassesAndMethods();
 
     }
