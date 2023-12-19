@@ -1,54 +1,35 @@
 package org.example;
 
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.data.general.DefaultPieDataset;
 
-import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.*;
+import java.util.List;
+
+import com.itextpdf.kernel.pdf.PdfDocument;
 
 public class PDFGenerator {
-    public static void generatePdf(List<InterviewData> data, String outputPath) throws IOException {
-        try (OutputStream fos = new FileOutputStream(outputPath);
-             PdfWriter writer = new PdfWriter(fos);
-             PdfDocument pdfDocument = new PdfDocument(writer);
-             Document document = new Document(pdfDocument)) {
 
-            // Create JFreeChart
-            JFreeChart chart = ChartGenerator.createChart(data);
+    public static void generatePdf(String pdfFileName) throws IOException {
+        try (PdfDocument pdf = new PdfDocument(new com.itextpdf.kernel.pdf.PdfWriter(new FileOutputStream(pdfFileName)));
+             Document document = new Document(pdf)) {
 
+            Image pieChart = new Image(ImageDataFactory.create("pie_chart.png"));
+            document.add(pieChart);
 
-            // Convert JFreeChart to BufferedImage
-            int width = 600; // set width of the image
-            int height = 400; // set height of the image
-            BufferedImage bufferedImage = chart.createBufferedImage(width, height);
+            document.add(new com.itextpdf.layout.element.Paragraph("\n"));
 
-            // Convert BufferedImage to iTextPDF Image
-            Image itextImage = new Image(ImageDataFactory.create(bufferedImage, null));
+            Image barChart = new Image(ImageDataFactory.create("bar_chart.png"));
+            document.add(barChart);
 
-            // Add content to the PDF
-            document.add(itextImage);
-
-            JFreeChart chart2 = ChartGenerator.generatePieChart(data);
-
-            // Convert JFreeChart to BufferedImage
-            int width2 = 600; // set width of the image
-            int height2 = 700; // set height of the image
-            BufferedImage bufferedImage2 = chart2.createBufferedImage(width2, height2);
-
-            // Convert BufferedImage to iTextPDF Image
-            Image itextImage2 = new Image(ImageDataFactory.create(bufferedImage2, null));
-            document.add(itextImage2);
+            document.close();
         }
-
     }
 
 }
+
